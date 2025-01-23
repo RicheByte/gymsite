@@ -1,0 +1,712 @@
+/* General Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+header {
+    background-color: #111;
+    color: #fff;
+    padding: 15px 20px;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+header nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header nav ul {
+    display: flex;
+    list-style: none;
+}
+
+header nav ul li {
+    margin-left: 20px;
+}
+
+header nav a {
+    text-decoration: none;
+    color: #fff;
+    font-size: 16px;
+    transition: color 0.3s ease;
+}
+
+header nav a:hover {
+    color: #e74c3c;
+}
+
+header .login-btn {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+header .login-btn:hover {
+    background-color: #c0392b;
+}
+
+/* General Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #FFFFFF; /* Clean, white background */
+    color: #2C2C2C; /* Space Gray for text */
+}
+
+/* Navbar Styles */
+.navbar {
+    background-color: #2C2C2C; /* Space Gray background */
+}
+
+.navbar .navbar-brand {
+    color: #D1D1D1; /* Silver color */
+    font-weight: bold;
+    font-size: 1.75rem;
+}
+
+.navbar .nav-link {
+    color: #D1D1D1; /* Silver color */
+    font-size: 1.1rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 15px 20px;
+}
+
+.navbar .nav-link:hover {
+    color: #FFD700; /* Golden Yellow for hover effect */
+}
+
+.navbar .nav-link.active {
+    color: #006F44; /* Midnight Green for active link */
+}
+
+/* Styling for Login Button */
+.btn-login {
+    background-color: #006F44; /* Midnight Green */
+    color: white;
+    padding: 12px 35px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    border-radius: 30px;
+    transition: all 0.3s ease;
+    margin-top: 10px;
+    border: none;
+}
+
+.btn-login:hover {
+    background-color: #FFD700; /* Golden Yellow on hover */
+    transform: scale(1.05); /* Slight scale effect */
+}
+
+/* Hero Section */
+.hero {
+    background-color: #2C2C2C; /* Space Gray */
+    color: #FFFFFF; /* White text for contrast */
+    padding: 100px 0;
+    text-align: center;
+}
+
+.hero h1 {
+    font-size: 3rem;
+}
+
+.hero p {
+    font-size: 1.25rem;
+    margin-top: 20px;
+}
+
+.hero .btn {
+    background-color: #006F44; /* Midnight Green for CTA */
+    color: white;
+    padding: 12px 30px;
+    font-size: 1.2rem;
+    border-radius: 30px;
+    transition: all 0.3s ease;
+}
+
+.hero .btn:hover {
+    background-color: #FFD700; /* Golden Yellow hover effect */
+}
+
+/* Membership Section */
+.membership {
+    background-color: #D1D1D1; /* Silver background for membership section */
+    padding: 60px 0;
+}
+
+.membership .card-header {
+    background-color: #2C2C2C; /* Space Gray */
+    color: white;
+    padding: 20px;
+    font-size: 1.25rem;
+}
+
+.membership .card-body {
+    background-color: white;
+    padding: 30px;
+}
+
+.membership .price {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #2C2C2C; /* Space Gray for text */
+    margin-bottom: 20px;
+}
+
+.membership .btn {
+    background-color: #006F44; /* Midnight Green */
+    color: white;
+    font-weight: bold;
+}
+
+
+/* Hero Section Styles */
+.hero {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: white;
+    height: 100vh;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.hero .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Dark overlay for contrast */
+}
+
+.hero .hero-content {
+    position: relative;
+    z-index: 2;
+}
+
+.hero h1 {
+    font-size: 3.5rem; /* Larger font size for better visibility */
+    font-weight: 700;
+    text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.7); /* Text shadow for better visibility */
+}
+
+.hero p {
+    font-size: 1.2rem;
+    font-weight: 300;
+    margin-bottom: 30px;
+    text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.7); /* Text shadow for clarity */
+}
+
+.hero .smooth-scroll {
+    padding: 12px 30px;
+    font-size: 1.1rem;
+    border-radius: 50px;
+    text-transform: uppercase;
+    font-weight: bold;
+    letter-spacing: 2px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+}
+
+.hero .smooth-scroll:hover {
+    background-color: #f39c12;
+    transform: scale(1.1); /* Slight scale-up effect */
+}
+
+@media (max-width: 768px) {
+    .hero h1 {
+        font-size: 2.5rem;
+    }
+
+    .hero p {
+        font-size: 1rem;
+    }
+}
+
+/* Exclusive Offers Section */
+.offers {
+    background-color: #D1D1D1; /* Silver background */
+    padding: 60px 0;
+}
+
+.offers .section-title {
+    color: #2C2C2C; /* Space Gray text for title */
+    font-size: 2.5rem;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.offers .lead {
+    color: #2C2C2C; /* Space Gray text for the description */
+    font-size: 1.2rem;
+    margin-bottom: 40px;
+}
+
+.card {
+    background-color: white;
+    border: none;
+    border-radius: 10px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.card:hover {
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); /* Add shadow on hover */
+}
+
+.card-body {
+    padding: 30px;
+}
+
+.card-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #006F44; /* Midnight Green title */
+    margin-bottom: 20px;
+}
+
+.card-text {
+    color: #2C2C2C; /* Space Gray text */
+    font-size: 1rem;
+    margin-bottom: 20px;
+}
+
+.price {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #2C2C2C; /* Space Gray price */
+    margin-bottom: 20px;
+}
+
+.btn-offer {
+    background-color: #006F44; /* Midnight Green */
+    color: white;
+    padding: 12px 30px;
+    font-size: 1.1rem;
+    border-radius: 30px;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+}
+
+.btn-offer:hover {
+    background-color: #FFD700; /* Golden Yellow on hover */
+    transform: scale(1.05);
+}
+
+/* About Section */
+.about {
+    background-color: #2C2C2C; /* Solid Space Gray background */
+    padding: 80px 0;
+}
+
+.about .section-title {
+    color: #FFFFFF; /* White text for title */
+    font-size: 2.5rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+}
+
+.about .lead {
+    color: #E0E0E0; /* Light gray text for the description */
+    font-size: 1.25rem;
+    margin-bottom: 30px;
+}
+
+.about .about-list {
+    font-size: 1.1rem;
+    margin-bottom: 30px;
+}
+
+.about .about-list li {
+    margin-bottom: 15px;
+    color: #E0E0E0; /* Light gray for list items */
+}
+
+.about .btn-about {
+    background-color: #006F44; /* Midnight Green */
+    color: white;
+    padding: 12px 35px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    border-radius: 30px;
+    transition: all 0.3s ease;
+    border: none;
+}
+
+.about .btn-about:hover {
+    background-color: #FFD700; /* Golden Yellow hover effect */
+    transform: scale(1.05);
+}
+
+.about img {
+    width: 100%;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); /* Enhanced shadow for image */
+}
+
+/* Membership Section */
+.membership {
+    background-color: #FFFFFF; /* White background */
+    padding: 60px 0;
+}
+
+.membership .section-title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #333; /* Dark text for contrast */
+    text-transform: uppercase;
+    margin-bottom: 20px;
+}
+
+.membership .lead {
+    font-size: 1.25rem;
+    color: #666; /* Lighter gray text */
+    margin-bottom: 40px;
+}
+
+.membership .card {
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    transition: all 0.3s ease;
+}
+
+.membership .card:hover {
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15); /* Enhanced shadow on hover */
+}
+
+.membership .card-header {
+    background-color: #F8F8F8; /* Light background for card header */
+    color: #333; /* Dark text */
+    font-size: 1.25rem;
+    padding: 15px;
+    font-weight: bold;
+}
+
+.membership .card-body {
+    padding: 30px;
+}
+
+.membership .price {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #006F44; /* Highlight the price with the Midnight Green color */
+    margin-bottom: 20px;
+}
+
+.membership .btn {
+    background-color: #006F44; /* Midnight Green */
+    color: white;
+    padding: 12px 30px;
+    font-size: 1.1rem;
+    border-radius: 30px;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+}
+
+.membership .btn:hover {
+    background-color: #FFD700; /* Golden Yellow hover effect */
+    transform: scale(1.05); /* Slight scale-up effect */
+}
+
+.membership .list-unstyled {
+    font-size: 1.1rem;
+    color: #666;
+    margin-bottom: 20px;
+}
+
+.membership .list-unstyled li {
+    margin-bottom: 10px;
+}
+
+
+/* Parallax Section */
+.parallax-section {
+    position: relative;
+    height: 300px; /* Set a small height for the section */
+    background-image: url('assets/maxresdefault.jpg'); /* Background Image */
+    background-attachment: fixed; /* Parallax effect */
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+/* Responsiveness */
+@media (max-width: 768px) {
+    .parallax-section {
+        height: 200px; /* Smaller height for mobile */
+    }
+}
+
+
+/* Contact Us Section */
+.contact {
+    background-color: #f4f4f4; /* Light gray background */
+    padding: 60px 20px;
+    text-align: center;
+}
+
+.contact .section-title {
+    font-size: 2.5rem;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+.contact .lead {
+    font-size: 1.25rem;
+    color: #333;
+    margin-bottom: 40px;
+}
+
+.contact-form {
+    max-width: 600px;
+    margin: 0 auto;
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.contact-form .form-group {
+    margin-bottom: 20px;
+}
+
+.contact-form input,
+.contact-form textarea {
+    width: 100%;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+    box-sizing: border-box;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+    border-color: #006F44; /* Green focus effect */
+    outline: none;
+}
+
+.contact-form .btn-submit {
+    background-color: #006F44; /* Midnight Green */
+    color: white;
+    padding: 15px 30px;
+    font-size: 1.1rem;
+    border-radius: 25px;
+    border: none;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.contact-form .btn-submit:hover {
+    background-color: #FFD700; /* Golden Yellow */
+    transform: scale(1.05);
+}
+
+/* Contact Info Styling */
+.contact-info {
+    margin-top: 40px;
+    font-size: 1.2rem;
+}
+
+.contact-info p {
+    color: #333;
+    margin-bottom: 10px;
+}
+
+/* Responsive Design for Mobile */
+@media (max-width: 768px) {
+    .contact .section-title {
+        font-size: 2rem;
+    }
+
+    .contact-form {
+        padding: 20px;
+    }
+
+    .contact-form input,
+    .contact-form textarea {
+        font-size: 0.95rem;
+    }
+
+    .contact-info {
+        font-size: 1rem;
+    }
+}
+
+/* Footer Section */
+.footer {
+    background-color: #282829; /* Dark Blue-gray background */
+    color: #ecf0f1; /* Light text for readability */
+    padding: 40px 20px;
+    text-align: left;
+}
+
+.footer .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 40px;
+    margin-bottom: 40px;
+}
+
+.footer-logo {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.footer-logo-img {
+    width: 120px;
+    margin-bottom: 15px;
+}
+
+.footer-description {
+    font-size: 1rem;
+    color: #bdc3c7;
+}
+
+.footer-links, .footer-contact, .footer-newsletter {
+    display: flex;
+    flex-direction: column;
+}
+
+.footer h4 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 15px;
+    color: #ecf0f1;
+}
+
+.footer-links ul, .footer-contact ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-links li, .footer-contact li {
+    margin-bottom: 12px;
+}
+
+.footer-links a, .footer-contact a {
+    color: #ecf0f1;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer-links a:hover, .footer-contact a:hover {
+    color: #f39c12; /* Golden yellow on hover */
+}
+
+.footer-newsletter input {
+    padding: 10px;
+    margin-right: 10px;
+    border-radius: 5px;
+    border: none;
+    width: 80%;
+    font-size: 1rem;
+}
+
+.footer-newsletter button {
+    padding: 10px 20px;
+    background-color: #f39c12;
+    border: none;
+    color: #fff;
+    font-size: 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.footer-newsletter button:hover {
+    background-color: #e67e22;
+}
+
+.footer-bottom {
+    text-align: center;
+    margin-top: 40px;
+}
+
+.footer-bottom p {
+    font-size: 0.9rem;
+    color: #bdc3c7;
+}
+
+.footer-social {
+    margin-top: 10px;
+}
+
+.footer-social a {
+    color: #ecf0f1;
+    font-size: 1.5rem;
+    margin: 0 10px;
+    transition: color 0.3s ease;
+}
+
+.footer-social a:hover {
+    color: #f39c12;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .footer-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+    }
+
+    .footer-logo {
+        align-items: center;
+        text-align: center;
+    }
+
+    .footer-newsletter input {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    .footer-bottom {
+        text-align: center;
+    }
+
+    .footer-social {
+        text-align: center;
+    }
+}
+
+
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
+    .offer-cards, .price-cards {
+        flex-direction: column;
+        align-items: center;
+    }
+}

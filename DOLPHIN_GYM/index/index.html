@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GymHub</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- AOS (Animate On Scroll) for animations -->
+    <link href="https://cdn.jsdelivr.net/npm/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+
+</head>
+<body>
+
+<!-- Navigation Bar -->
+<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #2C2C2C;">
+    <div class="container">
+        <a class="navbar-brand" href="#">FitLife Gym</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#home">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#about">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#offers">Offers</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#membership">Membership</a>
+                </li>
+                
+                <li class="nav-item">
+                    <a class="nav-link" href="#contact">Contact</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="blog/">Blog</a>
+                </li>
+            </ul>
+            <!-- Login Button -->
+            <a href="/DOLPHIN_GYM/index/dashboard/pages/login.php" class="btn btn-login ms-lg-4">Login</a>
+        </div>
+    </div>
+</nav>
+
+
+
+<!-- Hero Section -->
+<section id="home" class="hero d-flex justify-content-center align-items-center text-center text-white" style="background-image: url('gym-hero.jpg'); background-size: cover; background-position: center; height: 100vh;">
+    <!-- Overlay -->
+    <div class="overlay"></div>
+    <div class="hero-content" data-aos="fade-up">
+        <h1 class="display-4 fw-bold">Unlock Your Potential</h1>
+        <p class="lead mb-4">Your fitness journey begins here. Together, we'll achieve greatness.</p>
+        <a href="#about" class="btn btn-primary btn-lg smooth-scroll">Get Started</a>
+    </div>
+</section>
+
+
+<!-- Exclusive Offers Section -->
+<section id="offers" class="offers py-5" style="background-color: #D1D1D1;">
+    <div class="container text-center">
+        <h2 class="section-title" style="color: #2C2C2C;">Exclusive Offers</h2>
+        <p class="lead" style="color: #2C2C2C;">Special deals to help you get started on your fitness journey!</p>
+        <div class="row">
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card shadow-sm border-0 rounded">
+                    <div class="card-body text-center">
+                        <h5 class="card-title" style="color: #006F44;">Starter Pack</h5>
+                        <p class="card-text" style="color: #2C2C2C;">Perfect for newcomers looking to get fit. Includes a 1-month membership and personalized fitness plan.</p>
+                        <p class="price" style="color: #2C2C2C;">$29.99</p>
+                        <a href="#" class="btn btn-offer">Claim Offer</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card shadow-sm border-0 rounded">
+                    <div class="card-body text-center">
+                        <h5 class="card-title" style="color: #006F44;">Premium Membership</h5>
+                        <p class="card-text" style="color: #2C2C2C;">Access to all facilities, group classes, and 3-month personalized training.</p>
+                        <p class="price" style="color: #2C2C2C;">$99.99</p>
+                        <a href="#" class="btn btn-offer">Claim Offer</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card shadow-sm border-0 rounded">
+                    <div class="card-body text-center">
+                        <h5 class="card-title" style="color: #006F44;">VIP Elite</h5>
+                        <p class="card-text" style="color: #2C2C2C;">The ultimate fitness experience with unlimited access and exclusive trainer sessions.</p>
+                        <p class="price" style="color: #2C2C2C;">$149.99</p>
+                        <a href="#" class="btn btn-offer">Claim Offer</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- About Section -->
+<section id="about" class="about py-5" style="background-color: #2C2C2C;">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <h2 class="section-title" style="color: #FFFFFF;">About Us</h2>
+                <p class="lead" style="color: #E0E0E0;">We are committed to providing the best fitness experience. Our gym offers cutting-edge equipment, professional trainers, and a friendly community to help you achieve your fitness goals.</p>
+                <ul class="about-list" style="color: #E0E0E0;">
+                    <li><strong>Personalized Training Plans</strong> tailored to your goals.</li>
+                    <li><strong>24/7 Gym Access</strong> so you can work out on your schedule.</li>
+                    <li><strong>Experienced Trainers</strong> who provide expert guidance and support.</li>
+                    <li><strong>Group Classes</strong> to keep you motivated and engaged.</li>
+                </ul>
+                <a href="#contact" class="btn btn-about mt-4">Get in Touch</a>
+            </div>
+            <div class="col-lg-6">
+                <img src="path/to/your-image.jpg" alt="Gym Image" class="img-fluid rounded shadow-sm">
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+<!-- Membership Section -->
+<section id="membership" class="membership py-5" style="background-color: #FFFFFF;">
+    <div class="container">
+        <h2 class="section-title text-center" style="color: #333;">Membership Plans</h2>
+        <p class="lead text-center" style="color: #666;">Choose the plan that suits your fitness goals and get started today!</p>
+        
+        <div class="row">
+            <!-- Plan 1 -->
+            <div class="col-md-4 mb-4">
+                <div class="card shadow-sm">
+                    <div class="card-header text-center" style="background-color: #F8F8F8; font-weight: bold;">
+                        Basic Plan
+                    </div>
+                    <div class="card-body text-center">
+                        <h3 class="price" style="color: #006F44;">$19.99 / month</h3>
+                        <p style="color: #666;">Access to basic gym equipment and weekly group classes.</p>
+                        <ul class="list-unstyled">
+                            <li>24/7 Access</li>
+                            <li>Basic Equipment</li>
+                            <li>Group Classes</li>
+                        </ul>
+                        <a href="#" class="btn btn-success">Sign Up</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Plan 2 -->
+            <div class="col-md-4 mb-4">
+                <div class="card shadow-sm">
+                    <div class="card-header text-center" style="background-color: #F8F8F8; font-weight: bold;">
+                        Premium Plan
+                    </div>
+                    <div class="card-body text-center">
+                        <h3 class="price" style="color: #006F44;">$39.99 / month</h3>
+                        <p style="color: #666;">Full access to all equipment, personal trainer, and more.</p>
+                        <ul class="list-unstyled">
+                            <li>All-Access Equipment</li>
+                            <li>Personal Trainer</li>
+                            <li>Priority Group Classes</li>
+                        </ul>
+                        <a href="#" class="btn btn-success">Sign Up</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Plan 3 -->
+            <div class="col-md-4 mb-4">
+                <div class="card shadow-sm">
+                    <div class="card-header text-center" style="background-color: #F8F8F8; font-weight: bold;">
+                        Ultimate Plan
+                    </div>
+                    <div class="card-body text-center">
+                        <h3 class="price" style="color: #006F44;">$59.99 / month</h3>
+                        <p style="color: #666;">Includes everything, plus VIP access and luxury amenities.</p>
+                        <ul class="list-unstyled">
+                            <li>All Equipment</li>
+                            <li>Personal Trainer</li>
+                            <li>VIP Access</li>
+                            <li>Luxury Amenities</li>
+                        </ul>
+                        <a href="#" class="btn btn-success">Sign Up</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- Parallax Section with Only Background Image -->
+<section id="parallax-section" class="parallax-section"></section>
+
+
+
+<!-- Contact Us Section -->
+<section id="contact" class="contact">
+    <div class="container">
+        <h2 class="section-title">Get In Touch</h2>
+        <p class="lead">We’d love to hear from you! Whether you have a question or want to share feedback, don’t hesitate to reach out.</p>
+        <div class="contact-form">
+            <form action="your-server-endpoint" method="POST">
+                <div class="form-group">
+                    <input type="text" id="name" name="name" placeholder="Your Name" required />
+                </div>
+                <div class="form-group">
+                    <input type="email" id="email" name="email" placeholder="Your Email" required />
+                </div>
+                <div class="form-group">
+                    <textarea id="message" name="message" placeholder="Your Message" rows="5" required></textarea>
+                </div>
+                <button type="submit" class="btn-submit">Send Message</button>
+            </form>
+        </div>
+        <div class="contact-info">
+            <p><strong>Address:</strong> 123 Gym St, Fitness City, FL</p>
+            <p><strong>Phone:</strong> +123 456 789</p>
+            <p><strong>Email:</strong> contact@yourgym.com</p>
+        </div>
+    </div>
+</section>
+
+
+<!-- Footer Section -->
+<footer class="footer">
+    <div class="container">
+        <div class="footer-grid">
+            <!-- Logo and Description -->
+            <div class="footer-logo">
+                <img src="logo.png" alt="Your Gym Logo" class="footer-logo-img">
+                <p class="footer-description">Your Gym is the best place to achieve your fitness goals. Join us to experience personal transformation.</p>
+            </div>
+            <!-- Quick Links -->
+            <div class="footer-links">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#about">About Us</a></li>
+                    <li><a href="#membership">Membership</a></li>
+                    <li><a href="#shop">Shop</a></li>
+                    <li><a href="#contact">Contact Us</a></li>
+                </ul>
+            </div>
+            <!-- Contact Information -->
+            <div class="footer-contact">
+                <h4>Contact</h4>
+                <ul>
+                    <li><i class="fas fa-phone-alt"></i> (123) 456-7890</li>
+                    <li><i class="fas fa-envelope"></i> info@yourgym.com</li>
+                    <li><i class="fas fa-map-marker-alt"></i> 123 Gym Street, Fitness City, FC</li>
+                </ul>
+            </div>
+            <!-- Newsletter Signup -->
+            <div class="footer-newsletter">
+                <h4>Join Our Newsletter</h4>
+                <p>Stay updated with our latest news, offers, and fitness tips!</p>
+                <form class="newsletter-form">
+                    <input type="email" placeholder="Enter your email" required>
+                    <button type="submit">Subscribe</button>
+                </form>
+            </div>
+        </div>
+        <!-- Footer Bottom -->
+        <div class="footer-bottom">
+            <p>&copy; 2025 Your Gym. All rights reserved.</p>
+            <div class="footer-social">
+                <a href="https://www.facebook.com" target="_blank"><i class="fab fa-facebook"></i></a>
+                <a href="https://www.instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.twitter.com" target="_blank"><i class="fab fa-twitter"></i></a>
+                <a href="https://www.linkedin.com" target="_blank"><i class="fab fa-linkedin"></i></a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+
+    <!-- Bootstrap JS & Dependencies -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- AOS Script for Animations -->
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init();
+    </script>
+</body>
+</html>

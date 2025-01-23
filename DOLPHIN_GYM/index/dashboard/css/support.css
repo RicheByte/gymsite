@@ -1,0 +1,101 @@
+/* General Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+h1, h3 {
+    color: #2C3E50;
+}
+
+h3 {
+    font-size: 1.5rem;
+}
+
+/* Navbar */
+.navbar {
+    background-color: #2C2C2C;
+}
+
+.navbar .navbar-brand {
+    color: #D1D1D1;
+    font-weight: bold;
+    font-size: 1.75rem;
+}
+
+.navbar .nav-link {
+    color: #D1D1D1;
+    font-size: 1.1rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    padding: 15px 20px;
+}
+
+.navbar .nav-link:hover {
+    color: #FFD700;
+}
+
+.navbar .nav-link.active {
+    color: #006F44;
+}
+
+/* Main Content */
+.container {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.support-form, .tickets {
+    margin-bottom: 40px;
+}
+
+form {
+    margin-top: 20px;
+}
+
+textarea {
+    resize: vertical;
+}
+
+/* Support Ticket Styles */
+.support-ticket {
+    background-color: #fff;
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.support-ticket .ticket-title {
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: #2C3E50;
+}
+
+.support-ticket .ticket-description {
+    font-size: 1rem;
+    color: #34495E;
+}
+
+button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    opacity: 0.8;
+}
+
+/* Footer */
+footer {
+    background-color: #2C2C2C;
+    color: #D1D1D1;
+    padding: 20px;
+    text-align: center;
+}
