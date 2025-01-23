@@ -84,7 +84,9 @@ Access the application in your web browser:
 Usage
 
     Admin Login: Access the admin dashboard by navigating to index/admin/login.php.
-    User Features: Users can register, log in, and access features like the diet tracker and shopping cart.
+    User Features: Users can register, log in, and access features like the diet tracker and shopping cart. 
+    admin, username = admin , password = pwd
+    user, username = user, password = pwd
 
 Database Structure
 
