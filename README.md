@@ -110,7 +110,7 @@ This project is licensed under the MIT License. See the LICENSE file for details
 Thank you for checking out the Dolphin Gym Management System! We hope you find it useful for managing your gym operations.
 
 
-### Instructions for Use:
+### Instructions for Use: https://saegis-my.sharepoint.com/my?id=%2Fpersonal%2F2305s0918%5Fsaegis%5Fac%5Flk%2FDocuments%2Fstardust%20crusaders%20%20Bsc%20hons%20batch%202
 
 - Replace `yourusername` in the clone URL with your actual GitHub username.
 
