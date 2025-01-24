@@ -79,7 +79,7 @@ Start a local server (e.g., XAMPP, WAMP) and place the project folder in the ser
 
 Access the application in your web browser:
 
-    http://localhost/Dolphin_Gym/index/
+    http://localhost/DOLPHIN_GYM/index/
 
 Usage
 
