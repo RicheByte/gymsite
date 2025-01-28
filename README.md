@@ -111,8 +111,7 @@ Thank you for checking out the Dolphin Gym Management System! We hope you find i
 
 
 ### Instructions for Use: 
-https://saegis-my.sharepoint.com/my?id=%2Fpersonal%2F2305s0918%5Fsaegis%5Fac%5Flk%2FDocuments%2Fstardust%20crusaders%20%20Bsc%20hons%20batch%202
-
+https://saegis-my.sharepoint.com/:f:/g/personal/2305s0918_saegis_ac_lk/ElqytvSwr25FkzgE5rDIHHIBJ0TljzYH5ji21i97JAinZw?e=NKu7Sj
 - Replace `yourusername` in the clone URL with your actual GitHub username.
 
 - Adjust any sections as necessary to better fit your project's specifics or to add any additional information you think is relevant.
