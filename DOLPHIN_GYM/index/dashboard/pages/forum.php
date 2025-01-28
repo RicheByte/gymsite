@@ -5,73 +5,64 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
     header("Location: login.php");
     exit;
 }
+include_once 'include/db.php';
+include_once "component/dashboard_header.php";   //include dashboard header
 ?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Forum</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../css/forum.css">
-</head>
-<body>
-<!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #2C2C2C; padding: 0.5rem 1rem;">
-    <a class="navbar-brand" href="home.html" style="font-weight: bold;">FitLife Gym</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
-        <ul class="navbar-nav">
-            <li class="nav-item"><a class="nav-link" href="home.php">Home</a></li>
-            <li class="nav-item"><a class="nav-link" href="leaderboard.php">Leaderboard</a></li>
-            <li class="nav-item"><a class="nav-link" href="diet-tracker.php">Diet Tracker</a></li>
-            <li class="nav-item"><a class="nav-link" href="ai-chat.php">AI Chat</a></li>
-            <li class="nav-item"><a class="nav-link" href="live-trainer.php">Live Trainer</a></li>
-            <li class="nav-item"><a class="nav-link" href="forum.php">Forum</a></li>
-            <li class="nav-item"><a class="nav-link" href="support.php">Support</a></li>
-            <li class="nav-item"><a class="nav-link" href="/DOLPHIN_GYM/index/store/shoppingcart/index.php">Store</a></li>
-        </ul>
-    </div>
-    <a href="logout.php" 
-       style="background: green; color: white; text-decoration: none; padding: 0.8rem 1.5rem; font-size: 1rem; border: none; border-radius: 5px; cursor: pointer; transition: background 0.3s ease; text-align: center; margin-left: auto;"
-       onmouseover="this.style.background='yellow'; this.style.color='black';"
-       onmouseout="this.style.background='green'; this.style.color='white';">
-        Logout
-    </a>
-</nav>
 
 
     <main class="container mt-5">
         <h1>Forum</h1>
         <div class="post-section">
             <h3>Ask a Question</h3>
-            <form id="postForm">
+
+            <!-- forum support form -->
+            <form id="postForm" action="include/forum.inc.php" method="POST">
                 <div class="form-group">
                     <label for="postTitle">Post Title</label>
-                    <input type="text" id="postTitle" class="form-control" placeholder="Enter your question title" required>
+                    <input type="text" id="postTitle" name="title" class="form-control" placeholder="Enter your question title" required>
                 </div>
                 <div class="form-group">
                     <label for="postContent">Post Content</label>
-                    <textarea id="postContent" class="form-control" placeholder="Enter your question details" rows="5" required></textarea>
+                    <textarea id="postContent" name="desc" class="form-control" placeholder="Enter your question details" rows="5" required></textarea>
                 </div>
-                <button type="submit" class="btn btn-primary">Submit Question</button>
+                <button type="submit" class="btn btn-primary" name="forumSubmitBtn">Submit Question</button>
             </form>
         </div>
 
+
+         
+        <!-- here display all forum from database -->
         <div class="forum-posts mt-5">
-            <h3>Forum Topics</h3>
-            <div id="forumPostList">
-                <!-- Dynamic list of forum posts will appear here -->
-            </div>
-        </div>
+    <h3>Forum Topics</h3>
+    <div id="forumPostList">
+        <?php 
+            $sql = "SELECT f.*, u.username FROM forum f, users u WHERE f.userID = u.id";
+            $stmt = $mysqli->prepare($sql);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $rows = $result->fetch_all(MYSQLI_ASSOC);
+            
+            foreach ($rows as $post) {
+               
+                echo '<div class="forum-post">';
+                echo '<p><strong>Published by ' . htmlspecialchars($post['username']) . '</strong> on ' . $post['publish_date'] . ' at ' . $post['publish_Time'] . '</p>';
+                echo '<h4>' . htmlspecialchars($post['title']) . '</h4>';
+                echo '<p>' . nl2br(htmlspecialchars($post['description'])) . '</p><br/>';
+                echo '</div>';
+            }
+        ?>
+    </div>
+</div>
+
     </main>
 
-    <footer class="text-center mt-5 py-4" style="background-color: #2C2C2C; color: #D1D1D1;">
-        <p>&copy; 2025 FitLife Gym. All Rights Reserved.</p>
-    </footer>
 
-    <script src="../js/forum.js"></script>
-</body>
-</html>
+
+    <!-- <script src="../js/forum.js"></script> -->
+
+
+
+    
+<?php
+   include_once "component/dashboard_footer.php";  //include dashboard footer
+?>

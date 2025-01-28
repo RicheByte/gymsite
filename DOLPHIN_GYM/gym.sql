@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: Jan 23, 2025 at 11:25 AM
--- Server version: 10.4.28-MariaDB
--- PHP Version: 8.2.4
+-- Host: 127.0.0.1
+-- Generation Time: Jan 28, 2025 at 05:33 AM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -93,9 +93,23 @@ CREATE TABLE `calorie_leaderboard` (
 CREATE TABLE `calorie_log` (
   `id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
+  `mealTime` varchar(15) NOT NULL,
   `total_calories` int(11) NOT NULL,
   `date_logged` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `calorie_log`
+--
+
+INSERT INTO `calorie_log` (`id`, `user_id`, `mealTime`, `total_calories`, `date_logged`) VALUES
+(1, 15, 'Lunch', 165, '2025-01-25 18:30:00'),
+(2, 15, 'Lunch', 243, '2025-01-25 18:30:00'),
+(3, 15, 'Lunch', 141, '2025-01-25 18:30:00'),
+(4, 15, 'Snack', 299, '2025-01-25 18:30:00'),
+(5, 15, '', 0, '2025-01-25 18:30:00'),
+(6, 15, 'Dinner', 351, '2025-01-25 18:30:00'),
+(7, 15, 'Breakfast', 364, '2025-01-25 18:30:00');
 
 -- --------------------------------------------------------
 
@@ -123,6 +137,30 @@ INSERT INTO `foods` (`id`, `food_name`, `calories`, `admin_id`) VALUES
 (6, 'Egg (1 large)', 78, 1),
 (7, 'Milk (1 cup)', 124, 1),
 (8, 'Bread (1 slice)', 79, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `forum`
+--
+
+CREATE TABLE `forum` (
+  `id` int(11) NOT NULL,
+  `userID` int(11) DEFAULT NULL,
+  `title` varchar(255) DEFAULT NULL,
+  `description` varchar(255) DEFAULT NULL,
+  `publish_date` varchar(20) DEFAULT NULL,
+  `publish_Time` varchar(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `forum`
+--
+
+INSERT INTO `forum` (`id`, `userID`, `title`, `description`, `publish_date`, `publish_Time`) VALUES
+(4, 15, 'title-1', 'description-1', '2025-01-27', '16:49:59'),
+(5, 15, 'title-2', 'description-2', '2025-01-27', '16:50:48'),
+(6, 15, 'Login issue', 'I can not log to my user dashboard.How to fix that.\r\n', '2025-01-27', '17:07:02');
 
 -- --------------------------------------------------------
 
@@ -220,22 +258,49 @@ INSERT INTO `products` (`id`, `title`, `description`, `price`, `rrp`, `quantity`
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `session`
+--
+
+CREATE TABLE `session` (
+  `id` int(5) NOT NULL,
+  `type` varchar(20) NOT NULL,
+  `trainer` varchar(30) NOT NULL,
+  `date` varchar(10) NOT NULL,
+  `time` varchar(10) NOT NULL,
+  `userID` int(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `session`
+--
+
+INSERT INTO `session` (`id`, `type`, `trainer`, `date`, `time`, `userID`) VALUES
+(1, 'HIIT', 'trainer1', '2025-01-30', '13:00', 15),
+(3, 'Strength Training', 'trainer2', '2025-01-26', '10:50', 15),
+(4, 'Pilates', 'trainer3', '2025-01-28', '15:41', 15),
+(5, 'Yoga', 'trainer4', '2025-01-28', '16:11', 15);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `users`
 --
 
 CREATE TABLE `users` (
   `id` int(11) NOT NULL,
+  `first_name` varchar(100) NOT NULL,
+  `last_name` varchar(100) NOT NULL,
+  `email` varchar(100) NOT NULL,
   `username` varchar(50) NOT NULL,
-  `password` varchar(255) NOT NULL,
-  `admin_id` int(11) NOT NULL
+  `password` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `username`, `password`, `admin_id`) VALUES
-(1, 'user', '$2y$10$BqBMdczNhHEFZ9fC0gmIPO2gFDlUzzqf0ZeHXNjNJi069FU9yfUn2', 1);
+INSERT INTO `users` (`id`, `first_name`, `last_name`, `email`, `username`, `password`) VALUES
+(15, 'Janith', 'Harshana', 'j@gmail.com', 'user', '$2y$10$3dVkEk8BitAJREkff2lAHuAOV6m9TsArb8kO1Ep1yrBttg6V.U1Du');
 
 -- --------------------------------------------------------
 
@@ -247,8 +312,49 @@ CREATE TABLE `user_messages` (
   `id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `message` text NOT NULL,
+  `description` varchar(255) NOT NULL,
   `submitted_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `user_messages`
+--
+
+INSERT INTO `user_messages` (`id`, `user_id`, `message`, `description`, `submitted_at`) VALUES
+(1, 15, 'message 1', 'support description 1', '2025-01-26 18:30:00'),
+(2, 15, 'message 2', 'message description 2', '2025-01-26 18:30:00'),
+(3, 15, 'message 3', 'message descripton 3', '2025-01-26 18:30:00');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `workout`
+--
+
+CREATE TABLE `workout` (
+  `id` int(5) NOT NULL,
+  `type` varchar(20) NOT NULL,
+  `name` varchar(30) NOT NULL,
+  `date` varchar(10) NOT NULL,
+  `level` varchar(10) NOT NULL,
+  `duration` int(10) NOT NULL,
+  `weight` int(10) DEFAULT NULL,
+  `height` int(10) DEFAULT NULL,
+  `burnCalory` int(10) NOT NULL,
+  `userID` int(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `workout`
+--
+
+INSERT INTO `workout` (`id`, `type`, `name`, `date`, `level`, `duration`, `weight`, `height`, `burnCalory`, `userID`) VALUES
+(1, 'Yoga', 'workout1', '2025-01-26', 'Medium', 10, 45, 160, 300, 15),
+(2, 'Pilates', 'workout2', '2025-01-26', 'High', 30, 60, 165, 400, 15),
+(3, 'Pilates', 'workout3', '2025-01-26', 'Low', 25, 70, 123, 250, 15),
+(4, 'HIIT', 'workout4', '2025-01-27', 'Medium', 23, 45, 153, 600, 15),
+(5, 'Strength Training', 'workout5', '2025-01-27', 'Low', 40, 50, 120, 350, 15),
+(6, 'Strength Training', 'workout5', '2025-01-28', 'High', 60, 187, 180, 750, 15);
 
 --
 -- Indexes for dumped tables
@@ -300,6 +406,13 @@ ALTER TABLE `foods`
   ADD KEY `admin_id` (`admin_id`);
 
 --
+-- Indexes for table `forum`
+--
+ALTER TABLE `forum`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `userID` (`userID`);
+
+--
 -- Indexes for table `orders`
 --
 ALTER TABLE `orders`
@@ -337,12 +450,18 @@ ALTER TABLE `products`
   ADD KEY `admin_id` (`admin_id`);
 
 --
+-- Indexes for table `session`
+--
+ALTER TABLE `session`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `userID` (`userID`);
+
+--
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `username` (`username`),
-  ADD KEY `admin_id` (`admin_id`);
+  ADD UNIQUE KEY `username` (`username`);
 
 --
 -- Indexes for table `user_messages`
@@ -350,6 +469,13 @@ ALTER TABLE `users`
 ALTER TABLE `user_messages`
   ADD PRIMARY KEY (`id`),
   ADD KEY `user_id` (`user_id`);
+
+--
+-- Indexes for table `workout`
+--
+ALTER TABLE `workout`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `userID` (`userID`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -383,13 +509,19 @@ ALTER TABLE `calorie_leaderboard`
 -- AUTO_INCREMENT for table `calorie_log`
 --
 ALTER TABLE `calorie_log`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `foods`
 --
 ALTER TABLE `foods`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT for table `forum`
+--
+ALTER TABLE `forum`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `orders`
@@ -422,16 +554,28 @@ ALTER TABLE `products`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
+-- AUTO_INCREMENT for table `session`
+--
+ALTER TABLE `session`
+  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `user_messages`
 --
 ALTER TABLE `user_messages`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `workout`
+--
+ALTER TABLE `workout`
+  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- Constraints for dumped tables
@@ -470,6 +614,12 @@ ALTER TABLE `foods`
   ADD CONSTRAINT `foods_ibfk_1` FOREIGN KEY (`admin_id`) REFERENCES `admin` (`id`) ON DELETE CASCADE;
 
 --
+-- Constraints for table `forum`
+--
+ALTER TABLE `forum`
+  ADD CONSTRAINT `forum_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `users` (`id`);
+
+--
 -- Constraints for table `orders`
 --
 ALTER TABLE `orders`
@@ -489,16 +639,22 @@ ALTER TABLE `products`
   ADD CONSTRAINT `products_ibfk_1` FOREIGN KEY (`admin_id`) REFERENCES `admin` (`id`) ON DELETE CASCADE;
 
 --
--- Constraints for table `users`
+-- Constraints for table `session`
 --
-ALTER TABLE `users`
-  ADD CONSTRAINT `users_ibfk_1` FOREIGN KEY (`admin_id`) REFERENCES `admin` (`id`) ON DELETE CASCADE;
+ALTER TABLE `session`
+  ADD CONSTRAINT `session_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `users` (`id`);
 
 --
 -- Constraints for table `user_messages`
 --
 ALTER TABLE `user_messages`
   ADD CONSTRAINT `user_messages_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `workout`
+--
+ALTER TABLE `workout`
+  ADD CONSTRAINT `workout_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `users` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

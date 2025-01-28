@@ -5,99 +5,310 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
     header("Location: login.php");
     exit;
 }
+
+include_once "component/dashboard_header.php";   // Include dashboard header
+include_once 'include/db.php';
 ?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home - FitLife Gym</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <style>
-        
-    </style>
-</head>
-<body>
-    <header>
-        <!-- Navbar -->
-        <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #2C2C2C; padding: 0.5rem 1rem;">
-            <a class="navbar-brand" href="home.php" style="font-weight: bold;">FitLife Gym</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav mx-auto">
-                    <li class="nav-item"><a class="nav-link" href="home.php">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="leaderboard.php">Leaderboard</a></li>
-                    <li class="nav-item"><a class="nav-link" href="diet-tracker.php">Diet Tracker</a></li>
-                    <li class="nav-item"><a class="nav-link" href="ai-chat.php">AI Chat</a></li>
-                    <li class="nav-item"><a class="nav-link" href="live-trainer.php">Live Trainer</a></li>
-                    <li class="nav-item"><a class="nav-link" href="forum.php">Forum</a></li>
-                    <li class="nav-item"><a class="nav-link" href="support.php">Support</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/DOLPHIN_GYM/index/store/shoppingcart/index.php">Store</a></li>
-                </ul>
-                <a href="logout.php" 
-                   style="background: green; color: white; text-decoration: none; padding: 0.8rem 1.5rem; font-size: 1rem; border: none; border-radius: 5px; cursor: pointer; transition: background 0.3s ease; text-align: center;"
-                   onmouseover="this.style.background='yellow'; this.style.color='black';"
-                   onmouseout="this.style.background='green'; this.style.color='white';">
-                    Logout
-                </a>
-            </div>
-        </nav>
-    </header>
 
-    <main class="container mt-5">
-        <!-- Welcome Banner -->
-        <div class="jumbotron text-center">
-            <h1>Welcome Back, [Username]!</h1>
-            <p>Let’s crush your fitness goals today!</p>
+<main class="container mt-5">
+    <!-- Welcome Banner -->
+    <div class="jumbotron text-center">
+        <h1>Welcome Back, <?php echo $_SESSION['username']; ?></h1>
+        <p>Let’s crush your fitness goals today!</p>
+    </div>
+
+    <!-- Quick Access Section -->
+    <div class="row text-center mb-4">
+        <div class="col-md-4">
+            <button class="btn btn-success btn-lg w-100 mb-3" data-bs-toggle="modal" data-bs-target="#workoutModal">Save a Workout</button>
         </div>
+        <div class="col-md-4">
+            <button class="btn btn-warning btn-lg w-100 mb-3" data-bs-toggle="modal" data-bs-target="#appointmentModal">Join Live Session</button>
+        </div>
+        <div class="col-md-4">
+            <button class="btn btn-info btn-lg w-100 mb-3" data-bs-toggle="modal" data-bs-target="#previousWorkoutsModal">View Previous Workouts</button>
+        </div>
+    </div>
 
-        <!-- Quick Access Section -->
-        <div class="row text-center mb-4">
-            <div class="col-md-4">
-                <button class="btn btn-success btn-lg w-100 mb-3">Start a Workout</button>
+    <!-- Dashboard Features -->
+    <div class="row">
+        <div class="col-md-6">
+            <h3>Caleorie Chart</h3>
+            <canvas id="caloriesChart"></canvas>
+        </div>
+        <div class="col-md-6">
+            <h3>BMI Chart</h3>
+            <canvas id="bmiChart"></canvas>
+        </div>
+    </div>
+
+    <!-- /////////////////////////////////////////////////////////////Previous Workouts ///////////////////////////////////////////// -->
+    <div class="row mt-5">
+        <div class="col-12">
+            <h3>Upcoming Sessions</h3>
+            <ul class="list-group" id="previousWorkouts" style="padding: 0; margin: 0; list-style: none;">
+                <!-- Load upcoming session workout data -->
+                <?php
+                $sql = "SELECT * FROM session;";
+                $stmt = $mysqli->prepare($sql);
+                $stmt->execute();
+                $result = $stmt->get_result();
+                $rows = $result->fetch_all(MYSQLI_ASSOC);
+
+                foreach ($rows as $session) {
+                    echo '<li style="
+                        display: flex;
+                        
+                        align-items: center;
+                        border: 1px solid #ddd;
+                        border-radius: 8px;
+                        padding: 10px 15px;
+                        margin-bottom: 10px;
+                        background-color: #fff;
+                        transition: background-color 0.3s ease;
+                    " onmouseover="this.style.backgroundColor=\'#f8f9fa\'" onmouseout="this.style.backgroundColor=\'#fff\'">';
+
+                    echo '<span style="font-weight: bold; color:rgb(0, 12, 24);">' . htmlspecialchars($session['type']) . '</span>';
+                    echo '&nbsp with &nbsp<strong style="color: #333;">' . htmlspecialchars($session['trainer']) . '</strong>';
+                    echo '&nbsp on &nbsp<strong style="color: #333;">' . htmlspecialchars($session['date']) . '</strong>';
+                    echo '&nbsp at &nbsp<strong style="color: #333;">' . htmlspecialchars($session['time']) . '</strong>';
+                    echo '</li>';
+                }
+                ?>
+            </ul>
+        </div>
+    </div>
+
+
+</main>
+
+
+
+<!-- ///////////////////////////////////////////////////////////////// work out save detail form /////////////////////////////////////////////////-->
+<div class="modal fade" id="workoutModal" tabindex="-1" aria-labelledby="workoutModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="workoutModalLabel">Save a New Workout</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="col-md-4">
-                <button class="btn btn-primary btn-lg w-100 mb-3">Track Your Diet</button>
-            </div>
-            <div class="col-md-4">
-                <button class="btn btn-warning btn-lg w-100 mb-3">Join Live Session</button>
+            <div class="modal-body">
+
+                <!-- workout form field -->
+                <form id="workoutForm" action="include/saveWorkout.inc.php" method="POST">
+                    <div class="mb-3">
+                        <label for="workoutType" class="form-label">Workout Type</label>
+                        <select class="form-select" id="workoutType" name="workoutType" required>
+                            <option value="Cardio">Cardio</option>
+                            <option value="Yoga">Yoga</option>
+                            <option value="Strength Training">Strength Training</option>
+                            <option value="HIIT">HIIT</option>
+                            <option value="Pilates">Pilates</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="workoutName" class="form-label">Workout Name</label>
+                        <input type="text" class="form-control" name="workoutName" id="workoutName" placeholder="e.g., Morning Run" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="workoutDate" class="form-label">Date</label>
+                        <input type="date" name="workoutDate" class="form-control" id="workoutDate" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Workout Intensity</label>
+                        <div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="intensity" id="intensityLow" value="Low" required>
+                                <label class="form-check-label" for="intensityLow">Low</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="intensity" id="intensityMedium" value="Medium" required>
+                                <label class="form-check-label" for="intensityMedium">Medium</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="intensity" id="intensityHigh" value="High" required>
+                                <label class="form-check-label" for="intensityHigh">High</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="workoutDuration" class="form-label">Duration (in minutes)</label>
+                        <input type="number" class="form-control" name="workoutDuration" id="workoutDuration" placeholder="e.g., 30" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="workoutWeight" class="form-label">Weight (kg)</label>
+                        <input type="number" class="form-control" name="weight" id="workoutWeight" placeholder="e.g., 70" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="workoutHeight" class="form-label">Height (cm)</label>
+                        <input type="number" class="form-control" name="height" id="workoutHeight" placeholder="e.g., 170" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="caloriesBurned" class="form-label">Calories Burned</label>
+                        <input type="number" class="form-control" name="burnCaleroy" id="caloriesBurned" placeholder="e.g., 400" required>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary" name="saveWorkout">Save Workout</button>
+                </form>
             </div>
         </div>
+    </div>
+</div>
 
-        <!-- Dashboard Features -->
-        <div class="row">
-            <div class="col-md-6">
-                <h3>Your Progress</h3>
-                <canvas id="progressChart"></canvas>
+
+
+<!--//////////////////////////////////////////////////////////////// Set Appoinment details /////////////////////////////////////////////// -->
+<div class="modal fade" id="appointmentModal" tabindex="-1" aria-labelledby="appointmentModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="appointmentModalLabel">Book a Live Session</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="col-md-6">
-                <h3>Upcoming Sessions</h3>
-                <ul class="list-group">
-                    <li class="list-group-item">Session with Trainer John - 5 PM</li>
-                    <li class="list-group-item">Yoga Class - Tomorrow at 8 AM</li>
-                    <li class="list-group-item">Cardio Blast - Thursday at 6 PM</li>
-                </ul>
+            <div class="modal-body">
+
+                <!-- session book input field form -->
+                <form id="appointmentForm" action="include/makeSession.inc.php" method="POST">
+                    <div class="mb-3">
+                        <label for="workoutType" class="form-label">Workout Type</label>
+                        <select class="form-select" id="workoutType" name="sessionType">
+                            <option value="Cardio">Cardio</option>
+                            <option value="Yoga">Yoga</option>
+                            <option value="Strength Training">Strength Training</option>
+                            <option value="HIIT">HIIT</option>
+                            <option value="Pilates">Pilates</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="sessionTrainer" class="form-label">Trainer Name</label>
+                        <input type="text" name="sessionTrainer" class="form-control" id="sessionTrainer">
+                    </div>
+                    <div class="mb-3">
+                        <label for="sessionDate" class="form-label">Date</label>
+                        <input type="date" name="sessionDate" class="form-control" id="sessionDate">
+                    </div>
+                    <div class="mb-3">
+                        <label for="sessionTime" class="form-label">Time</label>
+                        <input type="time" name="sessionTime" class="form-control" id="sessionTime">
+                    </div>
+                    <button type="submit" class="btn btn-primary" name="saveSession">Book Session</button>
+                </form>
             </div>
         </div>
-    </main>
+    </div>
+</div>
 
-    <footer class="text-center mt-5 py-4" style="background-color: #2C2C2C; color: #D1D1D1;">
-        <p>&copy; 2025 FitLife Gym. All Rights Reserved.</p>
-    </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script>
-        // Chart.js Configuration
-        const ctx = document.getElementById('progressChart').getContext('2d');
-        const progressChart = new Chart(ctx, {
+
+<!-- /////////////////////////////////////////////Previous Workouts table///////////////////////////////////////////////////////////// -->
+<div class="modal fade" id="previousWorkoutsModal" tabindex="-1" aria-labelledby="previousWorkoutsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="previousWorkoutsModalLabel">Previous Workouts</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Workout Type</th>
+                            <th>Workout Name</th>
+                            <th>Date</th>
+                            <th>Calories Burned</th>
+                            <th>Weight</th>
+                            <th>Height</th>
+                            <th>Level</th>
+                            <th>Duration (min)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="previousWorkoutsTableBody">
+                        <!-- Load all previous workout data to the table -->
+                        <?php
+                        $sql = "SELECT * FROM workout;";
+                        $stmt = $mysqli->prepare($sql);
+                        $stmt->execute();
+                        $result = $stmt->get_result();
+                        $rows = $result->fetch_all(MYSQLI_ASSOC);
+
+                        foreach ($rows as $workout) {
+                            echo "<tr>";
+                            echo "<td>" . htmlspecialchars($workout['type']) . "</td>";
+                            echo "<td>" . htmlspecialchars($workout['name']) . "</td>";
+                            echo "<td>" . htmlspecialchars($workout['date']) . "</td>";
+                            echo "<td>" . htmlspecialchars($workout['burnCalory']) . "</td>";
+                            echo "<td>" . htmlspecialchars($workout['weight']) . "</td>";
+                            echo "<td>" . htmlspecialchars($workout['height']) . "</td>";
+                            echo "<td>" . htmlspecialchars($workout['level']) . "</td>";
+                            echo "<td>" . htmlspecialchars($workout['duration']) . "</td>";
+                            echo "</tr>";
+                        }
+                        ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ///////////////////////////////////////////////// for to draw chart get data from database //////////////////////////////////////////////////////////// -->
+<?php
+$sql = "SELECT date,burnCalory,height,weight FROM workout;";
+$result = $mysqli->query($sql);
+
+// Prepare data for Chart.js
+$labels = [];
+$data = [];
+$bmiData = [];
+
+if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        $labels[] = $row['date'];
+        $data[] = $row['burnCalory'];
+
+         // Calculate BMI: weight (kg) / (height (m) * height (m))
+         $heightInMeters = $row['height'] / 100; // Convert height to meters
+         $bmi = $row['weight'] / ($heightInMeters * $heightInMeters);
+         $bmiData[] = round($bmi, 2); // Round to 2 decimal places
+    }
+}
+
+// Encode data to JSON
+$labelsJson = json_encode($labels);
+$dataJson = json_encode($data);
+$bmiDataJson = json_encode($bmiData);
+?>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    // Display previous workouts in the modal when the button is clicked
+    // document.getElementById("previousWorkoutsModal").addEventListener("show.bs.modal", displayPreviousWorkoutsTable);
+
+
+
+    // Chart.js calerory chart Configuration
+
+    document.addEventListener("DOMContentLoaded", function() {
+        // PHP Data for Chart.js
+        const labels = <?php echo $labelsJson; ?>;
+        const data = <?php echo $dataJson; ?>;
+
+        // Initialize Chart.js
+        const ctx = document.getElementById('caloriesChart').getContext('2d');
+        const caloriesChart = new Chart(ctx, {
             type: 'line',
             data: {
-                labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4', 'Week 5'],
+                labels: labels,
                 datasets: [{
                     label: 'Calories Burned',
-                    data: [400, 450, 500, 550, 600],
+                    data: data,
                     borderColor: 'rgba(0, 128, 0, 1)',
                     backgroundColor: 'rgba(0, 128, 0, 0.2)',
                     pointBackgroundColor: 'yellow',
@@ -111,8 +322,8 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
                 scales: {
                     y: {
                         beginAtZero: true,
-                        min: 300, // Fixed minimum value
-                        max: 700, // Fixed maximum value
+                        // min: 300, // Fixed minimum value
+                        // max: 700, // Fixed maximum value
                         ticks: {
                             stepSize: 50
                         }
@@ -127,6 +338,95 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
                 }
             }
         });
-    </script>
-</body>
-</html>
+    });
+    
+    // implement bmi chart
+    document.addEventListener("DOMContentLoaded", function () {
+    // PHP Data for Chart.js
+    const labels = <?php echo $labelsJson; ?>;
+    const bmiData = <?php echo $bmiDataJson; ?>;
+
+    // Function to determine BMI category
+    function getBMICategory(bmi) {
+        if (bmi < 18.5) {
+            return 'Underweight';
+        } else if (bmi >= 18.5 && bmi < 24.9) {
+            return 'Normal weight';
+        } else if (bmi >= 25 && bmi < 29.9) {
+            return 'Overweight';
+        } else {
+            return 'Obesity';
+        }
+    }
+
+    // Function to determine color based on BMI category
+    function getBMICategoryColor(bmi) {
+        if (bmi < 18.5) {
+            return 'red'; // Underweight
+        } else if (bmi >= 18.5 && bmi < 24.9) {
+            return 'green'; // Normal weight
+        } else if (bmi >= 25 && bmi < 29.9) {
+            return 'orange'; // Overweight
+        } else {
+            return 'purple'; // Obesity
+        }
+    }
+
+    // Add BMI categories and colors to the data points
+    const pointColors = bmiData.map(bmi => getBMICategoryColor(bmi));
+
+    // Initialize Chart.js
+    const ctx = document.getElementById('bmiChart').getContext('2d');
+    const bmiChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [
+                {
+                    label: 'BMI',
+                    data: bmiData,
+                    borderColor: 'rgba(0, 0, 255, 1)',
+                    backgroundColor: 'rgba(0, 0, 255, 0.2)',
+                    pointBackgroundColor: pointColors, // Use dynamic colors for points
+                    pointBorderColor: pointColors,
+                    tension: 0.3 // Smooth line curve
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: true, // Maintain aspect ratio
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        stepSize: 5
+                    }
+                }
+            },
+            plugins: {
+                legend: {
+                    labels: {
+                        color: 'black'
+                    }
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function (context) {
+                            const bmi = context.raw;
+                            const category = getBMICategory(bmi);
+                            return `BMI: ${bmi} (${category})`;
+                        }
+                    }
+                }
+            }
+        }
+    });
+});
+
+
+</script>
+
+<?php
+include_once "component/dashboard_footer.php";  // Include dashboard footer
+?>
