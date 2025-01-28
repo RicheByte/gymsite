@@ -44,22 +44,22 @@ function displayPosts() {
     });
 }
 
-// Handle post submission
-document.getElementById("postForm").addEventListener("submit", function(event) {
-    event.preventDefault();
+// // Handle post submission
+// document.getElementById("postForm").addEventListener("submit", function(event) {
+//     event.preventDefault();
 
-    const title = document.getElementById("postTitle").value;
-    const content = document.getElementById("postContent").value;
+//     const title = document.getElementById("postTitle").value;
+//     const content = document.getElementById("postContent").value;
 
-    if (title.trim() !== "" && content.trim() !== "") {
-        // Add new post to the forumPosts array (In a real app, this would be stored in a database)
-        forumPosts.push({ title, content, replies: [] });
+//     if (title.trim() !== "" && content.trim() !== "") {
+//         // Add new post to the forumPosts array (In a real app, this would be stored in a database)
+//         forumPosts.push({ title, content, replies: [] });
 
-        // Reset the form and display the updated posts
-        document.getElementById("postForm").reset();
-        displayPosts();
-    }
-});
+//         // Reset the form and display the updated posts
+//         document.getElementById("postForm").reset();
+//         displayPosts();
+//     }
+// });
 
-// Initial display of posts
-displayPosts();
+// // Initial display of posts
+// displayPosts();
