@@ -9,7 +9,7 @@
     <!-- Google Fonts for Poppins -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <!-- Page Title -->
-    <title>Register</title>
+    <title>Fitness Blog Login</title>
     <!-- Inline CSS for Styling -->
     <style>
         /* General Body Styling */
@@ -17,17 +17,17 @@
             margin: 0;
             padding: 0;
             font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d); /* Fitness-inspired gradient */
             color: #fff;
             display: flex;
             justify-content: center;
-            align-items: flex-start; /* Changed to flex-start for scrollable content */
-            min-height: 100vh; /* Ensure body takes at least the full viewport height */
-            padding: 20px; /* Added padding for better spacing */
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
         }
 
-        /* Glassmorphism Container for the Register Form */
-        .register-container {
+        /* Glassmorphism Container for the Login Form */
+        .login-container {
             background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(10px);
             border-radius: 20px;
@@ -40,12 +40,26 @@
             box-sizing: border-box;
             position: relative;
             animation: fadeIn 0.8s ease-in-out;
-            margin-top: 20px; /* Added margin for better spacing */
-            margin-bottom: 20px; /* Added margin for better spacing */
+        }
+
+        /* Back Arrow Styling */
+        .back-arrow {
+            position: absolute;
+            top: 1.5rem;
+            left: 1.5rem;
+            text-decoration: none;
+            font-size: 1.5rem;
+            color: #fff;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+
+        .back-arrow:hover {
+            color: #fdbb2d; /* Fitness-inspired yellow color on hover */
+            transform: translateX(-5px); /* Slight move left on hover */
         }
 
         /* Title Styling */
-        .register-title {
+        .login-title {
             font-size: 2rem;
             margin-bottom: 0.5rem;
             color: #fff;
@@ -53,7 +67,7 @@
         }
 
         /* Subtitle Styling */
-        .register-subtitle {
+        .login-subtitle {
             margin: 0.5rem 0 2rem;
             font-size: 0.9rem;
             color: rgba(255, 255, 255, 0.8);
@@ -89,14 +103,14 @@
         }
 
         .form-group input:focus {
-            border-color: #ffcc00;
+            border-color: #fdbb2d; /* Fitness-inspired yellow focus color */
             outline: none;
-            box-shadow: 0 0 10px rgba(255, 204, 0, 0.5);
+            box-shadow: 0 0 10px rgba(253, 187, 45, 0.5);
         }
 
-        /* Register Button Styling */
-        .register-button {
-            background: #ffcc00;
+        /* Login Button Styling */
+        .login-button {
+            background: #fdbb2d; /* Fitness-inspired yellow */
             color: #000;
             padding: 0.8rem 1.5rem;
             font-size: 1rem;
@@ -108,31 +122,31 @@
             transition: background 0.3s ease, transform 0.2s ease;
         }
 
-        .register-button:hover {
-            background: #e6b800; /* Darker yellow on hover */
+        .login-button:hover {
+            background: #e6a800; /* Darker yellow on hover */
             transform: translateY(-2px); /* Slight lift effect */
         }
 
-        .register-button:active {
+        .login-button:active {
             transform: translateY(0); /* Reset on click */
         }
 
-        /* Login Link Styling */
-        .login-link {
+        /* Register Link Styling */
+        .register-link {
             margin-top: 1.5rem;
             font-size: 0.9rem;
             color: rgba(255, 255, 255, 0.8);
         }
 
-        .login-link a {
-            color: #ffcc00;
+        .register-link a {
+            color: #fdbb2d; /* Fitness-inspired yellow */
             text-decoration: none;
             font-weight: 600;
             transition: color 0.3s ease;
         }
 
-        .login-link a:hover {
-            color: #e6b800; /* Darker yellow on hover */
+        .register-link a:hover {
+            color: #e6a800; /* Darker yellow on hover */
         }
 
         /* Fade-in Animation */
@@ -168,51 +182,35 @@
 </head>
 
 <body>
-    <!-- Register Container -->
-    <div class="register-container">
-        <!-- Register Title -->
-        <h2 class="register-title">Create Your Account</h2>
-        <!-- Register Subtitle -->
-        <p class="register-subtitle">Sign up to get started</p>
+    <!-- Login Container -->
+    <div class="login-container">
+        <!-- Back Arrow to Home Page -->
+        <a href="/gymsite/DOLPHIN_GYM/index/" class="back-arrow">
+            <span class="material-symbols-outlined">arrow_back</span>
+        </a>
 
-        <!-- Register Form -->
-        <form action="include/register.inc.php" method="POST">
-            <!-- First Name -->
-            <div class="form-group">
-                <label for="first_name">First Name</label>
-                <input type="text" name="first_name" id="first_name" required placeholder="Enter your first name">
-            </div>
-            <!-- Last Name -->
-            <div class="form-group">
-                <label for="last_name">Last Name</label>
-                <input type="text" name="last_name" id="last_name" required placeholder="Enter your last name">
-            </div>
-            <!-- Email -->
-            <div class="form-group">
-                <label for="email">E-mail</label>
-                <input type="email" name="email" id="email" required placeholder="Enter your email">
-            </div>
-            <!-- Username -->
+        <!-- Login Title -->
+        <h2 class="login-title">Welcome Back</h2>
+        <!-- Login Subtitle -->
+        <p class="login-subtitle">Log in to access exclusive fitness content</p>
+
+        <!-- Login Form -->
+        <form action="include/blog_login.inc.php" method="POST">
+            <!-- Username Input -->
             <div class="form-group">
                 <label for="username">Username</label>
                 <input type="text" name="username" id="username" required placeholder="Enter your username">
             </div>
-            <!-- Password -->
+            <!-- Password Input -->
             <div class="form-group">
                 <label for="password">Password</label>
                 <input type="password" name="password" id="password" required placeholder="Enter your password">
             </div>
-            <!-- Confirm Password -->
-            <div class="form-group">
-                <label for="re-password">Confirm Password</label>
-                <input type="password" name="re-password" id="re-password" required placeholder="Confirm your password">
-            </div>
-            <!-- Register Button -->
-            <button type="submit" class="register-button">Register</button>
+            <!-- Login Button -->
+            <button type="submit" class="login-button">Login</button>
         </form>
 
-        <!-- Login Link -->
-        <p class="login-link">Already have an account? <a href="login.php">Login</a></p>
+    
     </div>
 </body>
 

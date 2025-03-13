@@ -1,49 +1,95 @@
 <?php
 session_start();
 
+// Check if the user is logged in
 if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
     header("Location: login.php");
     exit;
 }
 
-include_once "component/dashboard_header.php";   //include dashboard header
+include_once "component/dashboard_header.php"; // Include dashboard header
 ?>
 
-    <main class="container mt-5">
-        <h1>Live Trainer</h1>
-        <div class="live-stream-container">
-            <div class="video-container">
-                <!-- Placeholder for live stream video -->
-                <video id="liveStream" class="w-100" controls autoplay>
-                    <source src="path_to_live_stream_video.mp4" type="video/mp4">
-                    Your browser does not support the video tag.
-                </video>
-                <p class="text-center mt-3">Live Fitness Training Session</p>
-            </div>
+<!-- Custom CSS for colorful and attractive design -->
+<style>
+    .live-stream-container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+        border-radius: 15px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    .live-stream-container h2 {
+        color: #007bff;
+        font-weight: bold;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    #userVideo {
+        width: 100%;
+        height: auto;
+        border-radius: 15px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    .btn-primary {
+        background-color: #007bff;
+        border: none;
+        transition: background-color 0.3s ease;
+    }
+    .btn-primary:hover {
+        background-color: #0056b3;
+    }
+</style>
 
-            <div class="chat-container mt-5">
-                <h3>Chat with Trainer</h3>
-                <div class="chat-box">
-                    <!-- Example bot message -->
-                    <div class="chat-message bot-message">
-                        Welcome! Ask the trainer any questions during the live stream.
-                    </div>
-                </div>
-                <div class="input-container">
-                    <input type="text" id="chatInput" class="form-control" placeholder="Type your message...">
-                    <button class="btn btn-primary" id="sendChatBtn">Send</button>
-                </div>
-            </div>
-        </div>
-    </main>
+<main class="container mt-5">
+    <div class="live-stream-container">
+        <h2>Live Stream</h2>
+        <!-- Video Element -->
+        <video id="userVideo" autoplay playsinline></video>
+    </div>
+</main>
 
+<script>
+    async function watchLive() {
+        try {
+            // Fetch the offer from the server
+            const response = await fetch("server.php");
+            const data = await response.json();
 
+            if (data.type === "offer") {
+                // Create a new RTCPeerConnection
+                const peer = new RTCPeerConnection();
 
-    <script src="../js/live-trainer.js"></script>
+                // Set the remote description with the offer
+                await peer.setRemoteDescription(new RTCSessionDescription(data.offer));
 
+                // Create an answer
+                const answer = await peer.createAnswer();
+                await peer.setLocalDescription(answer);
 
-    
+                // Send the answer back to the server
+                await fetch("server.php", {
+                    method: "POST",
+                    body: JSON.stringify({ type: "answer", answer }),
+                    headers: { "Content-Type": "application/json" }
+                });
+
+                // Handle incoming video stream
+                peer.ontrack = (event) => {
+                    document.getElementById("userVideo").srcObject = event.streams[0];
+                };
+            }
+        } catch (error) {
+            console.error("Error during live streaming setup:", error);
+        }
+    }
+
+    // Start the live stream
+    watchLive();
+</script>
+
 <?php
-   include_once "component/dashboard_footer.php";  //include dashboard footer
+include_once "component/dashboard_footer.php"; // Include dashboard footer
 ?>
 
