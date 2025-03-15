@@ -10,7 +10,7 @@ loginUser($mysqli,$userName,$password);
 
 function loginUser($conn, $userName, $password){
 
-    $sql = "SELECT id,username,password FROM users WHERE username = ?";
+    $sql = "SELECT id,username,password FROM admin WHERE username = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param('s', $userName);
     $stmt->execute();
@@ -53,11 +53,11 @@ function loginUser($conn, $userName, $password){
 function navigateLogin($dbPassword,$password,$username,$userID){
     
     if(password_verify($password,$dbPassword)){
-         $_SESSION['logged_in'] = true;
-         $_SESSION['username'] = $username;
+         $_SESSION['admin_logged_in'] = true;
+         $_SESSION['admin_username'] = $username;
          
-          $_SESSION['userid']=$userID;
-          header("location: ../home.php"); 
+          $_SESSION['admin_userid']=$userID;
+          header("location: ../dashboard.php?message=admin_log_in"); 
          exit;
     }else{  //if password not matching
         ?>

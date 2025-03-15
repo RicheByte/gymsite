@@ -57,7 +57,7 @@ function navigateLogin($dbPassword,$password,$username,$userID){
          $_SESSION['username'] = $username;
          
           $_SESSION['userid']=$userID;
-          header("location: ../home.php"); 
+          header("location: ../blog_home.php"); // Redirect to ai-chat.php after login
          exit;
     }else{  //if password not matching
         ?>
@@ -87,5 +87,3 @@ function navigateLogin($dbPassword,$password,$username,$userID){
 <?php
     }
 }
-
-
