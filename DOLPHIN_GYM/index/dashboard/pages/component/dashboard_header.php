@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Leaderboard</title>
+    <title>Dolphin Fitness Club-User Dashboard</title>
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome for Icons -->
@@ -114,7 +114,7 @@
         <div class="container-fluid">
             <!-- Brand Logo -->
             <a class="navbar-brand" href="home.php">
-                <i class="fas fa-dumbbell me-2"></i>DOLPHIN GYM
+                <i class="fas fa-dumbbell me-2"></i>Dolphin Fitness
             </a>
 
             <!-- Toggle Button for Mobile -->

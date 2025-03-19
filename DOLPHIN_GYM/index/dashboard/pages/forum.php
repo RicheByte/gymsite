@@ -90,3 +90,9 @@ include_once "component/dashboard_header.php";   //include dashboard header
     </div>
 
 </main>
+
+
+
+<?php
+include_once "component/dashboard_footer.php";  // Include dashboard footer
+?>
