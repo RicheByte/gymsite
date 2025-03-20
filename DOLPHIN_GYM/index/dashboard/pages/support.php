@@ -1,12 +1,18 @@
 <?php
 session_start();
 
+// Redirect to login if the user is not logged in
 if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
     header("Location: login.php");
     exit;
 }
+
+// Include database connection and dashboard header
 include_once 'include/db.php';
-include_once "component/dashboard_header.php";   //include dashboard header
+include_once "component/dashboard_header.php";
+
+// Get the logged-in user's ID from the session
+$user_id = $_SESSION['userid']; // Ensure this is set during login
 ?>
 
 <main class="container mt-5">
@@ -35,8 +41,10 @@ include_once "component/dashboard_header.php";   //include dashboard header
         <h3 class="text-center text-primary mb-4">Your Support Tickets</h3>
         <div id="ticketList">
             <?php 
-                $sql = "SELECT * FROM user_messages ORDER BY submitted_at DESC";
+                // Fetch only the tickets submitted by the logged-in user
+                $sql = "SELECT * FROM user_messages WHERE user_id = ? ORDER BY submitted_at DESC";
                 $stmt = $mysqli->prepare($sql);
+                $stmt->bind_param("i", $user_id); // Bind the user ID to the query
                 $stmt->execute();
                 $result = $stmt->get_result();
                 $rows = $result->fetch_all(MYSQLI_ASSOC);

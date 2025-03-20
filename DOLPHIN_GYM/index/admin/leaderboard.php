@@ -1,6 +1,10 @@
 <?php
-// Start the session to check if the admin is logged in
-session_start();
+// Start the session securely
+session_start([
+    'cookie_secure' => true,
+    'cookie_httponly' => true,
+    'use_strict_mode' => true
+]);
 
 // Redirect to the login page if the admin is not logged in
 if (!isset($_SESSION['admin_logged_in'])) {
@@ -21,6 +25,10 @@ $query = "SELECT fitness_stats.id, fitness_stats.user_id, users.username, fitnes
           WHERE fitness_stats.status = 'pending'";
 $result = $mysqli->query($query);
 
+if (!$result) {
+    die("Database query failed: " . $mysqli->error);
+}
+
 // Function to calculate points
 function calculatePoints($weight_loss, $bmi_improvement, $workouts, $steps, $strength_gain)
 {
@@ -40,29 +48,27 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['assign_points'])) {
     $stats = $stmt->get_result()->fetch_assoc();
 
     if ($stats) {
-        // Calculate points
-        $total_points = calculatePoints($stats['weight_loss'], $stats['bmi_improvement'], $stats['workouts'], $stats['steps'], $stats['strength_gain']);
+       // Calculate points
+  $total_points = calculatePoints($stats['weight_loss'], $stats['bmi_improvement'], $stats['workouts'], $stats['steps'], $stats['strength_gain']);
 
-        // Update or insert points in rank table
-        $query = "INSERT INTO leaderboard (user_id, total_points) 
-                  VALUES (?, ?) 
-                  ON DUPLICATE KEY UPDATE total_points = total_points + ?";
-        $stmt = $mysqli->prepare($query);
-        $stmt->bind_param("iii", $user_id, $total_points, $total_points);
-        $stmt->execute();
+  // Update or insert points in rank table
+  $query = "INSERT INTO leaderboard (user_id, total_points) 
+            VALUES (?, ?) 
+            ON DUPLICATE KEY UPDATE total_points = total_points + ?";
+  $stmt = $mysqli->prepare($query);
+  $stmt->bind_param("iii", $user_id, $total_points, $total_points);
+  $stmt->execute();
 
-        // Mark fitness stat as reviewed
-        $query = "UPDATE fitness_stats SET status = 'reviewed' WHERE id = ?";
-        $stmt = $mysqli->prepare($query);
-        $stmt->bind_param("i", $fitness_id);
-        $stmt->execute();
+  // Mark fitness stat as reviewed
+  $query = "UPDATE fitness_stats SET status = 'reviewed' WHERE id = ?";
+  $stmt = $mysqli->prepare($query);
+  $stmt->bind_param("i", $fitness_id);
+  $stmt->execute();
 
-        // Update rankings based on points
-        $mysqli->query("SET @rank = 0");
-        $mysqli->query("UPDATE leaderboard SET rank = (@rank := @rank + 1) ORDER BY total_points DESC");
-
-        header("Location: leaderboard.php?message=points_updated");
-        exit;
+  // Update rankings based on points
+  $mysqli->query("SET @rank = 0");
+  $mysqli->query("UPDATE leaderboard SET rank = (@rank := @rank + 1) ORDER BY total_points DESC");
+        
     }
 }
 
@@ -72,6 +78,19 @@ $ranking_query = "SELECT users.username, leaderboard.total_points, leaderboard.r
                   JOIN users ON leaderboard.user_id = users.id 
                   ORDER BY leaderboard.total_points DESC";
 $rank_result = $mysqli->query($ranking_query);
+
+if (!$rank_result) {
+    die("Database query failed: " . $mysqli->error);
+}
+
+// Fetch all ranking data into an array
+$rank_data = $rank_result->fetch_all(MYSQLI_ASSOC);
+
+// Calculate the maximum points
+$max_points = !empty($rank_data) ? max(array_column($rank_data, 'total_points')) : 1;
+
+// Reset the pointer of the result set to iterate again
+$rank_result->data_seek(0);
 ?>
 
 <!-- Custom CSS for modern styling -->
@@ -79,18 +98,15 @@ $rank_result = $mysqli->query($ranking_query);
     .table {
         border-collapse: separate;
         border-spacing: 0 10px;
-        /* Add spacing between rows */
     }
 
     .table thead th {
         background-color: #007bff;
-        /* Bootstrap primary color */
         color: white;
     }
 
     .table tbody tr {
         background-color: #f8f9fa;
-        /* Light gray background for rows */
         transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
 
@@ -101,19 +117,16 @@ $rank_result = $mysqli->query($ranking_query);
 
     .btn-primary {
         background-color: #007bff;
-        /* Bootstrap primary color */
         border: none;
         transition: background-color 0.3s ease;
     }
 
     .btn-primary:hover {
         background-color: #0056b3;
-        /* Darker shade for hover effect */
     }
 
     .progress-bar {
         background-color: #28a745;
-        /* Bootstrap success color */
     }
 
     .list-group-item {
@@ -172,7 +185,7 @@ $rank_result = $mysqli->query($ranking_query);
         <div class="card-body">
             <div class="list-group">
                 <?php while ($rank = $rank_result->fetch_assoc()) {
-                    $progress = ($rank['total_points'] / max(array_column($rank_result->fetch_all(MYSQLI_ASSOC), 'total_points'))) * 100;
+                    $progress = ($rank['total_points'] / $max_points) * 100;
                 ?>
                     <div class="list-group-item">
                         <h5>#<?php echo $rank['rank']; ?> - <?php echo htmlspecialchars($rank['username']); ?></h5>
