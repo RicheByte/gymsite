@@ -12,6 +12,9 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
 include_once "component/dashboard_header.php";
 include_once "include/db.php";
 
+// Get the logged-in user's ID from the session
+$user_id = $_SESSION['userid']; // Ensure this is set during login
+
 // Fetch foods from the database
 $foods = [];
 $sql = "SELECT id, food_name, calories FROM foods;";
@@ -20,10 +23,11 @@ $stmt->execute();
 $result = $stmt->get_result();
 $foods = $result->fetch_all(MYSQLI_ASSOC);
 
-// Fetch diet history from the database for the popup
+// Fetch diet history from the database for the logged-in user
 $dietHistory = [];
-$sqlHistory = "SELECT * FROM calorie_log;";
+$sqlHistory = "SELECT * FROM calorie_log WHERE user_id = ? ORDER BY date_logged DESC;";
 $stmtHistory = $mysqli->prepare($sqlHistory);
+$stmtHistory->bind_param("i", $user_id); // Bind the user ID to the query
 $stmtHistory->execute();
 $resultHistory = $stmtHistory->get_result();
 $dietHistory = $resultHistory->fetch_all(MYSQLI_ASSOC);
@@ -204,6 +208,9 @@ $dietHistory = $resultHistory->fetch_all(MYSQLI_ASSOC);
                 foodName,
                 calories
             });
+
+            // Clear the food selection dropdown
+            foodSelect.selectedIndex = 0;
 
             // Remove Button Click Event
             row.querySelector(".removeBtn").addEventListener("click", () => {

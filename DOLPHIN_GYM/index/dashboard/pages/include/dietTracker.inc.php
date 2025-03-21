@@ -17,9 +17,9 @@ $userID = $_SESSION['userid'];
 $mealTime = $_POST['mealTime'];
 
 
-$sql = "INSERT INTO calorie_log (user_id,mealTime,total_calories,date_logged) VALUES (?, ?, ?,?)";
+$sql = "INSERT INTO calorie_log (user_id,mealTime,total_calories,date_logged) VALUES (?, ?, ?,now())";
 $stmt = $mysqli->prepare($sql);
-$stmt->bind_param('ssss', $userID, $mealTime, $totalCal, $date);
+$stmt->bind_param('sss', $userID, $mealTime, $totalCal);
 
 
 if ($stmt->execute()) {

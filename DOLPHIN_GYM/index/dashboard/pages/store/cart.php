@@ -17,25 +17,26 @@ if (isset($_POST["add_to_cart"])) {
   $product_id = intval($_POST["product_id"]);
   $product_title = $_POST["product_title"];
   $product_price = floatval($_POST["product_price"]);
+  $user_id = $_SESSION['userid']; // Assuming you store the user ID in the session
 
-  // Check if item already exists in the cart
-  $sql_check = "SELECT * FROM cart WHERE product_id = ?";
+  // Check if item already exists in the cart for this user
+  $sql_check = "SELECT * FROM cart WHERE product_id = ? AND user_id = ?";
   $stmt_check = $mysqli->prepare($sql_check);
-  $stmt_check->bind_param("i", $product_id);
+  $stmt_check->bind_param("ii", $product_id, $user_id);
   $stmt_check->execute();
   $result_check = $stmt_check->get_result();
 
   if ($result_check->num_rows > 0) {
     // If product exists, update quantity
-    $sql_update = "UPDATE cart SET quantity = quantity + 1 WHERE product_id = ?";
+    $sql_update = "UPDATE cart SET quantity = quantity + 1 WHERE product_id = ? AND user_id = ?";
     $stmt_update = $mysqli->prepare($sql_update);
-    $stmt_update->bind_param("i", $product_id);
+    $stmt_update->bind_param("ii", $product_id, $user_id);
     $stmt_update->execute();
   } else {
     // Insert new product into the cart
-    $sql_insert = "INSERT INTO cart (product_id, product_title, product_price, quantity) VALUES (?, ?, ?, 1)";
+    $sql_insert = "INSERT INTO cart (product_id, product_title, product_price, quantity, user_id) VALUES (?, ?, ?, 1, ?)";
     $stmt_insert = $mysqli->prepare($sql_insert);
-    $stmt_insert->bind_param("isd", $product_id, $product_title, $product_price);
+    $stmt_insert->bind_param("isdi", $product_id, $product_title, $product_price, $user_id);
     $stmt_insert->execute();
   }
 }
@@ -44,18 +45,23 @@ if (isset($_POST["add_to_cart"])) {
 if (isset($_POST['update_quantity'])) {
   $cart_id = intval($_POST['cart_id']);
   $new_quantity = intval($_POST['quantity']);
+  $user_id = $_SESSION['userid']; // Assuming you store the user ID in the session
 
   if ($new_quantity > 0) {
-    $sql_update_quantity = "UPDATE cart SET quantity = ? WHERE id = ?";
+    $sql_update_quantity = "UPDATE cart SET quantity = ? WHERE id = ? AND user_id = ?";
     $stmt_update_quantity = $mysqli->prepare($sql_update_quantity);
-    $stmt_update_quantity->bind_param("ii", $new_quantity, $cart_id);
+    $stmt_update_quantity->bind_param("iii", $new_quantity, $cart_id, $user_id);
     $stmt_update_quantity->execute();
   }
 }
 
-// Fetch all cart items
-$sql_cart = "SELECT * FROM cart";
-$result_cart = $mysqli->query($sql_cart);
+// Fetch all cart items for the logged-in user
+$user_id = $_SESSION['userid']; // Assuming you store the user ID in the session
+$sql_cart = "SELECT * FROM cart WHERE user_id = ?";
+$stmt_cart = $mysqli->prepare($sql_cart);
+$stmt_cart->bind_param("i", $user_id);
+$stmt_cart->execute();
+$result_cart = $stmt_cart->get_result();
 ?>
 
 <!-- Custom CSS for modern styling -->
@@ -166,8 +172,6 @@ $result_cart = $mysqli->query($sql_cart);
 </div>
 
 <?php
-
-
 // Include dashboard footer
 include_once "../component/dashboard_footer.php";
 ?>

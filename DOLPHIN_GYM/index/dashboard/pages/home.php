@@ -99,8 +99,9 @@ include_once 'include/db.php';
                     <ul class="list-group" id="previousWorkouts">
                         <?php
                         // Fetch upcoming sessions from the database
-                        $sql = "SELECT * FROM session;";
+                        $sql = "SELECT * FROM session WHERE userID = ?;";
                         $stmt = $mysqli->prepare($sql);
+                        $stmt->bind_param("i", $_SESSION['userid']);
                         $stmt->execute();
                         $result = $stmt->get_result();
                         $rows = $result->fetch_all(MYSQLI_ASSOC);
@@ -293,8 +294,9 @@ include_once 'include/db.php';
                     <tbody id="previousWorkoutsTableBody">
                         <?php
                         // Fetch all previous workout data from the database
-                        $sql = "SELECT * FROM workout;";
+                        $sql = "SELECT * FROM workout WHERE userID = ?;";
                         $stmt = $mysqli->prepare($sql);
+                        $stmt->bind_param("i", $_SESSION['userid']);
                         $stmt->execute();
                         $result = $stmt->get_result();
                         $rows = $result->fetch_all(MYSQLI_ASSOC);
@@ -326,8 +328,11 @@ include_once 'include/db.php';
 
 <!-- ///////////////////////////////////////////////// for to draw chart get data from database //////////////////////////////////////////////////////////// -->
 <?php
-$sql = "SELECT date,burnCalory,height,weight FROM workout;";
-$result = $mysqli->query($sql);
+$sql = "SELECT date, burnCalory, height, weight FROM workout WHERE userID = ?;";
+$stmt = $mysqli->prepare($sql);
+$stmt->bind_param("i", $_SESSION['userid']);
+$stmt->execute();
+$result = $stmt->get_result();
 
 // Prepare data for Chart.js
 $labels = [];
